@@ -1,0 +1,82 @@
+variable,definition,source,type
+appid,Unique Steam application ID for the game.,SteamSpy / Steam Store,identifier
+name,Game title listed on Steam.,Steam Store appdetails,text
+developer,Developer name listed by SteamSpy.,SteamSpy,text
+publisher,Publisher name listed by SteamSpy.,SteamSpy,text
+release_date_raw,Release date as originally returned by the Steam Store.,Steam Store appdetails,text
+release_year,Calendar year extracted from the Steam Store release date.,Derived from Steam Store,integer
+game_age,Years since release in 2026; same concept as game_age_years.,Derived,integer
+game_age_years,"Years since release at collection year 2026, computed as 2026 minus release_year.",Derived,integer
+game_age_years_squared,Squared game_age_years; used only for the non-linearity model check.,Derived,numeric
+is_indie,Equals 1 when Steam Store genres include Indie; equals 0 otherwise.,Derived from Steam Store genres,binary
+is_free,Equals 1 when the Steam Store marks the game as free-to-play; equals 0 for paid games.,Derived from Steam Store,binary
+price_numeric,Current listed price in USD; free games are coded as 0.,Steam Store / SteamSpy,numeric
+initial_price_numeric,"Base listed price in USD before any current discount, when available.",Steam Store / SteamSpy,numeric
+log_price,Natural log of 1 plus initial_price_numeric.,Derived,numeric
+log_price_paid,Natural log of 1 plus initial_price_numeric for paid games; free games are coded as 0 and handled separately with is_free.,Derived,numeric
+log_price_paid_squared,Squared log_price_paid; used only for the non-linearity model check.,Derived,numeric
+discount_percent,Current discount percentage reported by SteamSpy at collection time.,SteamSpy,numeric
+positive,Number of positive Steam recommendations reported by SteamSpy.,SteamSpy,integer
+negative,Number of negative Steam recommendations reported by SteamSpy.,SteamSpy,integer
+total_reviews,"Total number of Steam recommendations, computed as positive plus negative.",Derived from SteamSpy,integer
+log_total_reviews,Natural log of 1 plus total_reviews; main review-count engagement proxy used as the outcome.,Derived,numeric
+positive_rate,"Share of Steam reviews marked Recommended, computed as positive divided by total_reviews; ranges from 0 to 1.",Derived from SteamSpy,numeric
+majority_recommended,Equals 1 when at least half of Steam reviews are Recommended; used for descriptive plots.,Derived,binary
+owners_range,"SteamSpy estimated owner range as text. This is estimated owners, not downloads or exact sales.",SteamSpy,text
+owners_low,Legacy column name for the lower bound of the SteamSpy owner estimate.,Derived from SteamSpy,numeric
+owners_high,Legacy column name for the upper bound of the SteamSpy owner estimate.,Derived from SteamSpy,numeric
+owners_lower,Lower bound of the SteamSpy estimated owner range.,Derived from SteamSpy,numeric
+owners_upper,Upper bound of the SteamSpy estimated owner range.,Derived from SteamSpy,numeric
+owners_midpoint,"Midpoint of the SteamSpy estimated owner range. This is an estimate, not downloads or exact sales.",Derived from SteamSpy,numeric
+log_owners_midpoint,Natural log of 1 plus owners_midpoint; used as a robustness engagement proxy.,Derived,numeric
+ccu,Current concurrent users reported by SteamSpy at collection time.,SteamSpy,integer
+average_forever,"Average lifetime playtime reported by SteamSpy, in minutes when available.",SteamSpy,numeric
+median_forever,"Median lifetime playtime reported by SteamSpy, in minutes when available.",SteamSpy,numeric
+windows,Equals 1 when the Steam Store lists Windows support.,Steam Store appdetails,binary
+mac,Equals 1 when the Steam Store lists Mac support.,Steam Store appdetails,binary
+linux,Equals 1 when the Steam Store lists Linux support.,Steam Store appdetails,binary
+platform_count,"Number of supported Steam desktop platforms among Windows, Mac and Linux; this does not measure mobile support.",Derived,integer
+genres_text,"Steam Store genres joined by vertical bars; these are Store genres, not Steam user tags.",Steam Store appdetails,text
+categories_text,"Steam Store categories/features joined by vertical bars; these are Store feature labels, not Steam user tags.",Steam Store appdetails,text
+supported_languages_raw,Supported-language text as originally returned by the Steam Store.,Steam Store appdetails,text
+supported_languages,Parsed supported languages joined by vertical bars.,Derived from Steam Store,text
+supported_languages_count,Original approximate count of supported languages from the earlier cleaning pass.,Derived from Steam Store,numeric
+language_count,Number of supported languages parsed from the Steam Store page.,Derived from Steam Store,numeric
+log_language_count,Natural log of 1 plus language_count; used for the language-count predictor because language counts are skewed.,Derived,numeric
+has_english,Equals 1 when English is listed as a supported language.,Derived from Steam Store,binary
+has_french,Equals 1 when French is listed as a supported language.,Derived from Steam Store,binary
+has_german,Equals 1 when German is listed as a supported language.,Derived from Steam Store,binary
+has_spanish,Equals 1 when Spanish is listed as a supported language.,Derived from Steam Store,binary
+has_simplified_chinese,Equals 1 when Simplified Chinese is listed as a supported language.,Derived from Steam Store,binary
+has_japanese,Equals 1 when Japanese is listed as a supported language.,Derived from Steam Store,binary
+has_korean,Equals 1 when Korean is listed as a supported language.,Derived from Steam Store,binary
+has_russian,Equals 1 when Russian is listed as a supported language.,Derived from Steam Store,binary
+has_portuguese,Equals 1 when Portuguese is listed as a supported language.,Derived from Steam Store,binary
+has_major_non_english_language,Equals 1 when at least one selected major non-English language is listed.,Derived from Steam Store,binary
+has_major_asian_language,"Equals 1 when at least one of Simplified Chinese, Japanese or Korean is listed. It does not mean the game supports most Asian languages.",Derived from Steam Store,binary
+has_single_player,Equals 1 when Steam Store categories include Single-player.,Derived from Store categories,binary
+has_family_sharing,Equals 1 when Steam Store categories include Family Sharing.,Derived from Store categories,binary
+has_multiplayer,Equals 1 when Steam Store categories indicate multiplayer or PvP support.,Derived from Store categories,binary
+has_coop,Equals 1 when Steam Store categories indicate co-op or Remote Play Together support.,Derived from Store categories,binary
+has_controller_support,Equals 1 when Steam Store categories mention controller or Steam Input support for PC play; this is not console-platform support.,Derived from Store categories,binary
+is_early_access,Equals 1 when Store metadata indicates Early Access.,Derived,binary
+has_steam_achievements,"Equals 1 when the game lists Steam Achievements, meaning Steam-integrated achievement goals that players can unlock.",Derived from Store categories,binary
+has_steam_cloud,"Equals 1 when the game lists Steam Cloud, meaning Steam can synchronize supported save files/settings across devices.",Derived from Store categories,binary
+has_steam_trading_cards,"Equals 1 when the game lists Steam Trading Cards, collectible profile items players can receive and craft into badges.",Derived from Store categories,binary
+has_steam_leaderboards,"Equals 1 when the game lists Steam Leaderboards, meaning Steam-integrated rankings for player scores or progress.",Derived from Store categories,binary
+top_visibility,Equals 1 when total_reviews is in the top quartile of this sample; legacy descriptive engagement flag.,Derived,binary
+has_multiplayer_or_coop,"Equals 1 when has_multiplayer or has_coop equals 1; kept for description, not used with the separate components in the final model.",Derived,binary
+label_adventure,Equals 1 when Adventure appears in available Store genres/categories; exact Steam user tags were not collected.,Derived from Store genres/categories,binary
+label_casual,Equals 1 when Casual appears in available Store genres/categories; exact Steam user tags were not collected.,Derived from Store genres/categories,binary
+label_puzzle,Equals 1 when Puzzle appears in available Store genres/categories; exact Steam user tags were not collected.,Derived from Store genres/categories,binary
+label_point_click,Equals 1 when Point & Click appears in available Store genres/categories; exact Steam user tags were not collected.,Derived from Store genres/categories,binary
+label_story_rich,Equals 1 when Story Rich appears in available Store genres/categories; exact Steam user tags were not collected.,Derived from Store genres/categories,binary
+label_atmospheric,Equals 1 when Atmospheric appears in available Store genres/categories; exact Steam user tags were not collected.,Derived from Store genres/categories,binary
+label_first_person,Equals 1 when First-Person appears in available Store genres/categories; exact Steam user tags were not collected.,Derived from Store genres/categories,binary
+genre_action,Equals 1 when Steam Store genres include Action; included because it appears in at least 50 games.,Derived from Store genres,binary
+genre_adventure,Equals 1 when Steam Store genres include Adventure; included because it appears in at least 50 games.,Derived from Store genres,binary
+genre_casual,Equals 1 when Steam Store genres include Casual; included because it appears in at least 50 games.,Derived from Store genres,binary
+genre_rpg,Equals 1 when Steam Store genres include RPG; included because it appears in at least 50 games.,Derived from Store genres,binary
+genre_simulation,Equals 1 when Steam Store genres include Simulation; included because it appears in at least 50 games.,Derived from Store genres,binary
+genre_strategy,Equals 1 when Steam Store genres include Strategy; included because it appears in at least 50 games.,Derived from Store genres,binary
+english_plus_extra_language,Equals 1 when English is listed and the game supports at least one additional language; equals 0 otherwise.,Derived from Steam Store supported_languages,binary
